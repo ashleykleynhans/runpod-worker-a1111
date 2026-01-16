@@ -27,6 +27,9 @@ pip3 install --no-cache-dir torch==2.1.2+cu118 torchvision torchaudio --index-ur
 echo "Installing xformers"
 pip3 install --no-cache-dir xformers==0.0.23.post1 --index-url https://download.pytorch.org/whl/cu118
 
+# Use community fork since Stability-AI made their repo private
+export STABLE_DIFFUSION_REPO="https://github.com/w-e-w/stablediffusion.git"
+
 echo "Installing A1111 Web UI"
 wget https://raw.githubusercontent.com/ashleykleynhans/runpod-worker-a1111/main/install-automatic.py
 python3 -m install-automatic --skip-torch-cuda-test
