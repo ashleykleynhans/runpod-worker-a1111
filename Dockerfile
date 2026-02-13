@@ -1,4 +1,5 @@
-FROM nvidia/cuda:12.1.1-cudnn8-devel-ubuntu22.04
+ARG CUDA_VERSION=12.4.1
+FROM nvidia/cuda:${CUDA_VERSION}-cudnn-devel-ubuntu22.04
 
 ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1 \
@@ -13,8 +14,13 @@ WORKDIR /
 RUN apt update && \
     apt upgrade -y && \
     apt install -y \
-      python3-dev \
-      python3-pip \
+      software-properties-common && \
+    add-apt-repository ppa:deadsnakes/ppa && \
+    apt update && \
+    apt install -y \
+      python3.12 \
+      python3.12-dev \
+      python3.12-venv \
       fonts-dejavu-core \
       rsync \
       git \
@@ -38,7 +44,8 @@ RUN apt update && \
     apt-get clean -y
 
 # Set Python
-RUN ln -s /usr/bin/python3.10 /usr/bin/python
+RUN ln -s /usr/bin/python3.12 /usr/bin/python && \
+    curl -sS https://bootstrap.pypa.io/get-pip.py | python
 
 # Install Worker dependencies
 RUN pip install requests runpod==1.7.7 huggingface_hub
