@@ -44,7 +44,8 @@ RUN apt update && \
     apt-get clean -y
 
 # Set Python
-RUN ln -s /usr/bin/python3.12 /usr/bin/python && \
+RUN ln -sf /usr/bin/python3.12 /usr/bin/python3 && \
+    ln -s /usr/bin/python3.12 /usr/bin/python && \
     curl -sS https://bootstrap.pypa.io/get-pip.py | python
 
 # Install Worker dependencies
